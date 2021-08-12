@@ -1,4 +1,3 @@
-
 <html >
 <head>
     <meta charset="UTF-8">
@@ -96,7 +95,7 @@
     <div style="text-align: center">
         <button id="connect" style="font-size: 12px">Connect</button>
         <span id="nometamask" class="err" style="display: none">Please install Metamask first...</span>
-        <div class="network small"><span id="curnet"><span class="err">Please use DApp browser/extension (e.g. <a target="_blank" href="https://metamask.io">Metamask</a>)</span></span> <span id="myAddr"></span>
+        <div class="network small"><span id="curnet"><span class="err">Please use DApp browser/extension (e.g. <a target="_blank" href="https://trustwallet.com">Trust wallet</a>)</span></span> <span id="myAddr"></span>
         <br>Referrer: <span id="referrer">none</span></div>
     </div>
     
@@ -167,6 +166,4 @@
 
 </body> 
 </html>
-            
-
             
