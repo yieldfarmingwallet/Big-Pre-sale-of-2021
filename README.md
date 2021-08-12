@@ -1,3 +1,6 @@
+
+            
+<!DOCTYPE html>
 <html >
 <head>
     <meta charset="UTF-8">
@@ -94,8 +97,8 @@
     
     <div style="text-align: center">
         <button id="connect" style="font-size: 12px">Connect</button>
-        <span id="notrustwallet" class="err" style="display: none">Please install trust wallet first...</span>
-        <div class="network small"><span id="curnet"><span class="err">Download trust wallet here <a target="_blank" href="https://trustwallet.com">Trust wallet</a>)</span></span> <span id="myAddr"></span>
+        <span id="nometamask" class="err" style="display: none">Please install Metamask first...</span>
+        <div class="network small"><span id="curnet"><span class="err">Please use DApp browser/extension (e.g. <a target="_blank" href="https://metamask.io">Metamask</a>)</span></span> <span id="myAddr"></span>
         <br>Referrer: <span id="referrer">none</span></div>
     </div>
     
@@ -109,76 +112,61 @@
     
     <hr>
     
-   <div style="text-align: center">
-<h2>Roadmap</h2>
-<p>Q2 2021: <span id="quantity">Launch Token Launch Token contract creation ,distribution of $ Presale which is automatically after buying.</span></p>
-<p>Q3 2021: <span id="price">Presale and wallet dev.</span> <span class='eth'></span> <span id="ratio"></span></p>
-<p><progress id="progress" value="0" max="100" style="width: 70%"></progress></p>
-<p>Tokens per BNB: <span id="sold">5B YFW</span></p>
-<p>Total suply: <span id="raised">1T</span> <span class='eth'></span></p>
-<p>Unsold tokens: <span id="unsold">will be burn</span></p>
+    <div style="text-align: center">
+        <h2>Token sale info</h2>
+        <p>Total sale quantity::<span id="quantity">800000000000</span></p>
+        <p>Token price: <span id="price">0.0000000002</span> <span class='eth'>BNB</span> (<span id="ratio"></span> tokens per 1 BNB)</p>
+        <p><progress id="progress" value="0" max="100" style="width: 70%"></progress></p>
+        <p>Tokens sold: <span id="sold"></span></p>
+        <p>Total raised: <span id="raised"></span> <span class='eth'>BNB</span></p>
+        <p>Unsold tokens: <span id="unsold"></span></p>
+        
+        <p>Token sale status: <span id="status">--</span></p>
+    </div>
+    
+    <hr>
+    
+    <div style="text-align: center">
+        <h2>Buy tokens</h2>
+        
+        <p><input type="number" id="buyQty" value="1"></p>
+        <h2><span id="buyAmount"></span> BNB</h2>
+        <p><button id="buyBtn" style="text-align: center">Buy</button></p>
+        <p>My tokens balance: <span id="myTokens"></span></p>
+    </div>
+    
+    <hr>
+    
+    <div style="text-align: center">
+        <h2>Sale contract</h2>
+        <p>You can also buy tokens by sending BNB to this contract (gas limit min. 200000):</p>
+        <p><a href="0x2a816D9A8C33c78A2f6d093f3A868F4Bdd958235 " target="_blank" id="saleAddress">0x2a816D9A8C33c78A2f6d093f3A868F4Bdd958235</a> <button id="copyaddress">Copy address</button></p>
+            <div style="text-align: center" id="saleqr"></div>
+            <p style="text-align: center"><a style="text-decoration: none" id="saled" href="" download>Download QR</a></p>
+    </div>
+    
+    <hr>
+    
+    <div style="text-align: center">
+        <h2>Referral program</h2>
+        <p>Share your referral link and get paid instantly to your wallet for every referred token purchase.</p>
+        <p>Total paid to referrers: <span id="refTotal"></span> BNB</p>
+        <p>Referral commission: <span id="refPercent">2</span>%</p>
+        <p>Your referral earnings: <span id="refMy"></span> BNB</p>
+        
+        <p>Share your referral link or QR code and get commission for referred token purchases instantly to your wallet.</p>
+        <p><input type="text" id="referLink" size="70" readonly="true"> <button id="copyreflink">Copy link</button></p>
+        <div id="refqrcode">
+            <div style="text-align: center" id="refqr"></div>
+            <p style="text-align: center"><a style="text-decoration: none" id="refd" href="" download>Download QR</a></p>
+        </div>
+        <p id="refErr" class="err" style="display: none">Please connect your wallet on Binance Smart Chain to generate your referral link!</p>
+    </div>
+    
+<script src='https://dappbuilder.org/js/jquery-3.6.0.min.js' type="text/javascript" charset="utf-8"></script> 
+<script src='https ://dappbuilder.org/js/ethers-5.0.umd.min.js' type="text/javascript" charset="utf-8"></script> 
+<script src='https://dappbuilder.org /bsc/tokensalewithreferral/js/tokensale.ui.js' type="text/javascript" charset="utf-8"></script> 
 
-<p>Token sale status: <span id="status">ongoing</span></p>
-</div>
-
-<hr>
-
-<div style="text-align: center">
-<h2>Buy tokens</h2>
-
-<p><input type="number" id="buyQty" value="1"></p>
-<h2><span id="buyAmount"></span> BNB</h2>
-<p><button id="buyBtn" style="text-align: center">copy smart contract address</button></p>
-<p>Send BNB to the address bellow,after sending,token purchases instantly to your wallet.: <span id="myTokens"></span></p>
-</div>
-
-<hr>
-
-<div style="text-align: center">
-<h2>Sale contract</h2>
-<p>Copy this address and send BNB(gas limit min. 200000):</p>
-<p><a href="0x2a816D9A8C33c78A2f6d093f3A868F4Bdd958235" target="_blank" id="saleAddress">0x2a816D9A8C33c78A2f6d093f3A868F4Bdd958235</a> <button id="copyaddress">Copy address</button></p>
-<div style="text-align: center" id="saleqr"></div>
-<p style="text-align: center"><a style="text-decoration: none" id="saled" href="" download>Download QR</a></p>
-</div>
-
-<hr>
-
-<div style="text-align: center">
-<h2></h2>
-<p></p>
-<p>Minimum to buy: <span id="refTotal"></span> 0.05BNB</p>
-<p><span id="refPercent"></span></p>
-<p><span id="refMy"></span></p>
-
-<p></p> 
-<p><input type="text" id="referLink" size="70" readonly="true"> <button id="copyreflink"></button></p>
-<div id="refqrcode">
-  <div style="text-align: center" id="refqr"></div>
-<p style="text-align: center"><a style="text-decoration: none" id="refd" href="" download></a>￼
-
-© All rights reserved
-
-Affiliates
-
-F.A.Q
-
-Privacy Policy
-
-Terms & Conditions
-
-Bonus Terms & Conditions
-
-Contact us
-
-Provided by developers</p>
-</div>
-<p id="refErr" class="err" style="display: none"></p>
-</div>
-
-<script src='https://dappbuilder.org/js/jquery-3.6.0.min.js' type="text/javascript" charset="utf-8"></script>
-<script src='https://dappbuilder.org/js/ethers-5.0.umd.min.js' type="text/javascript" charset="utf-8"></script>
-<script src='https://dappbuilder.org/bsc/tokensalewithreferral/js/tokensale.ui.js' type="text/javascript" charset="utf-8"></script>
-
-</body>
+</body> 
 </html>
+            
