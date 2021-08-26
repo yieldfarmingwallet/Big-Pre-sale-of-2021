@@ -1,5 +1,4 @@
 
-            
 <!DOCTYPE html>
 <html >
 <head>
@@ -11,16 +10,16 @@
     <title>Token sale</title>
    
     <script>
-        var test = faux; // False if contracts are on Mainnet0x2a816D9A8C33c78A2f6d093f3A868F4Bdd958235
-        var contractAddressSale = '0x2a816D9A8C33c78A2f6d093f3A868F4Bdd958235';0x2a816D9A8C33c78A2f6d093f3A868F4Bdd9582350x2a816D9A8C33c78A2f6d093f3A868F4Bdd958235
-        var contractAddressToken = '0x183a39d8d1B3ffFE176e09537485B49F3f48Cb45';
+        var test = faux; // False if contracts are on Mainnet
+        var contractAddressSale = '0x68310fA2391BAd2ee628272E44CA4F97b6aa2166';
+        var contractAddressToken = '0xB37f602Be761d01e8f96E9eF072c1c87Cc46e13f';
     </script>
     
     <style>
         
         body {font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; color: #FFFFFF; background-color: #000000; font-size: 16px; font-weight: 400;}
 
-        h1 { font-size: 24px; font-weight: 700;} 
+        h1 { font-size: 24px; font-weight: 700;}
         h2 { font-size: 22px; font-weight: 500;}
 
         .small {
@@ -28,7 +27,15 @@
         }
 
         .err {
-             color: #fa0707;
+             color: red;
+        }
+        
+        .green {
+             color: green;
+        }
+        
+        .blue {
+             color: blue;
         }
 
         * {
@@ -96,77 +103,82 @@
 <body>
     
     <div style="text-align: center">
-        <button id="connect" style="font-size: 12px">Connect</button>
+        <button id="connect" style="font-size: 12px">Connect</button> <button class="switch" id="addMainBSC " style="font-size: 12px;">à BSC Mainnet</button>
         <span id="nometamask" class="err" style="display: none">Please install Metamask first...</span>
         <div class="network small"><span id="curnet"><span class="err">Please use DApp browser/extension (e.g. <a target="_blank" href="https://metamask.io">Metamask</a>)</span></span> <span id="myAddr"></span>
-        <br>Referrer: <span id="referrer">none</span></div>
+        <span id="referred" style="display:none"><br>Referrer: <span id="referrer"></span></span></div>
     </div>
     
     <div style="text-align: center">
-        <h2>Token info</h2>
-        <p><span id="tokenName">Yield Farming wallet</span> (<span id="tokenSymbol">YFW</span>)</p>
-        <p><a target="_blank" href="0x183a39d8d1B3ffFE176e09537485B49F3f48Cb45" id="tokenAddress">0x183a39d8d1B3ffFE176e09537485B49F3f48Cb45</a></p>
-        <!-- Reserved in case you want to show decimals and total supply: <span id="#tokenDecimalsUI"></span> <span id="#tokenSupplyUI"></span>-->
-        <p><button id="addToken" style="text-align: center">Add to wallet</button></p>
+        <h1>Token info</h1>
+        <h2><span id="tokenName"> Échange de fortune</span> (<span class="tokenSymbol">FORTUNE</span>)</h2>
+        <p><a target="_blank" href="https://bscscan.com/token/0xB37f602Be761d01e8f96E9eF072c1c87Cc46e13f" id="tokenAddress">0xB37f602Be761d01e8f96E9eF072c1c87Cc46e13f</a></p>
+        <!-- Reserved in case you want to show decimals and total supply: Decimals <span id="#tokenDecimals"></span> Total supply <span id="#tokenSupply"></span>-->
+        <p>Do not send BNB to the token contract!</p>
+        <p><button id="addToken" style="text-align: center">Add to Metamask</button> <button id="copyToken" style="text-align: center">Copy address</button></p>
     </div>
     
     <hr>
     
     <div style="text-align: center">
-        <h2>Token sale info</h2>
-        <p>Total sale quantity::<span id="quantity">800000000000</span></p>
-        <p>Token price: <span id="price">0.0000000002</span> <span class='eth'>BNB</span> (<span id="ratio"></span> tokens per 1 BNB)</p>
+        <h1>Token sale status</h1>
+        <h1>
+            <span id="active" style="display:none" class="status green">Active</span>
+            <span id="finished" style="display:none" class="status green">Finished</span>
+            <span id="addtokens" style="display:none" class="status err"><br>Ask token sale admin to approve token sale contract or check tokens balance on the wallet!</span>
+        </h1>
         <p><progress id="progress" value="0" max="100" style="width: 70%"></progress></p>
-        <p>Tokens sold: <span id="sold"></span></p>
-        <p>Total raised: <span id="raised"></span> <span class='eth'>BNB</span></p>
-        <p>Unsold tokens: <span id="unsold"></span></p>
-        
-        <p>Token sale status: <span id="status">--</span></p>
+        <p>Raised: <span id="raised"></span> of <span class="hardcap">300,0</span> BNB</p>
+        <p>Tokens sold: <span id="sold"></span> of <span class="saleqty">1200000000000.0</span> <span class="tokenSymbol">FORTUNE </span></p>FORTUNE
+        <p>Remaining: <span id="toraise"></span> BNB (~ <span id="unsold"></span> <span class="tokenSymbol"></span>)</p>
     </div>
-    
     <hr>
     
     <div style="text-align: center">
-        <h2>Buy tokens</h2>
-        
-        <p><input type="number" id="buyQty" value="1"></p>
-        <h2><span id="buyAmount"></span> BNB</h2>
+        <h1>Buy tokens</h1>
+        <p>1 BNB = <span class="rate">4000000000.0</span> <span class="tokenSymbol">FORTUNE </span></p>FORTUNE FORTUNE
+        <p><input type="number" id="buyAmount" value="0" min="0"> BNB</p>
+        <p>You get: <span id="get">0</span> <span class="tokenSymbol"></span></p>
         <p><button id="buyBtn" style="text-align: center">Buy</button></p>
-        <p>My tokens balance: <span id="myTokens"></span></p>
+        <p>In my wallet: <span id="myTokens"></span> <span class="tokenSymbol"></span></p>
     </div>
-    
     <hr>
     
     <div style="text-align: center">
-        <h2>Sale contract</h2>
-        <p>You can also buy tokens by sending BNB to this contract (gas limit min. 200000):</p>
-        <p><a href="0x2a816D9A8C33c78A2f6d093f3A868F4Bdd958235 " target="_blank" id="saleAddress">0x2a816D9A8C33c78A2f6d093f3A868F4Bdd958235</a> <button id="copyaddress">Copy address</button></p>
+        <h1>Token sale information</h1>
+        <p>Hardcap: <span class="hardcap">300,0</span> BNB (~ <span class="saleqty">1200000000000.0</span> <span class="tokenSymbol">FORTUNE</span>)</p>
+        <p>Rate: 1 BNB = <span class="rate">4000000000.0</span> <span class="tokenSymbol">FORTUNE</span> (~ <span class="price">2.5e-10</span> BNB/<span class="tokenSymbol">FORTUNE</span>)</p>
+
+    </div>
+    <hr>
+    
+    <div style="text-align: center">
+        <h1>Sale contract</h1>
+        <p>You can also buy tokens by sending BNB directly from your wallet to this contract<br>
+        (please increase gas limit to 200,000 or even more for tokens with special functions like autoLP, swaps, etc.)</p>
+        <p><a href="https://bscscan.com/adresse/0x68310fA2391BAd2ee628272E44CA4F97b6aa2166 " target="_blank" id="saleAddress">0x68310fA2391BAd2ee628272E44CA4F97b6aa2166</a>  <button id="copySale" style="text-align: center">Copy address</button></p>
             <div style="text-align: center" id="saleqr"></div>
-            <p style="text-align: center"><a style="text-decoration: none" id="saled" href="" download>Download QR</a></p>
     </div>
-    
     <hr>
     
-    <div style="text-align: center">
-        <h2>Referral program</h2>
+    <div id="refarea" style="text-align: center">
+        <h1>Referral program</h1>
         <p>Share your referral link and get paid instantly to your wallet for every referred token purchase.</p>
         <p>Total paid to referrers: <span id="refTotal"></span> BNB</p>
-        <p>Referral commission: <span id="refPercent">2</span>%</p>
+        <p>Referral commission: <span id="refPercent">30</span>%</p>
         <p>Your referral earnings: <span id="refMy"></span> BNB</p>
         
         <p>Share your referral link or QR code and get commission for referred token purchases instantly to your wallet.</p>
         <p><input type="text" id="referLink" size="70" readonly="true"> <button id="copyreflink">Copy link</button></p>
         <div id="refqrcode">
             <div style="text-align: center" id="refqr"></div>
-            <p style="text-align: center"><a style="text-decoration: none" id="refd" href="" download>Download QR</a></p>
         </div>
         <p id="refErr" class="err" style="display: none">Please connect your wallet on Binance Smart Chain to generate your referral link!</p>
     </div>
     
-<script src='https://dappbuilder.org/js/jquery-3.6.0.min.js' type="text/javascript" charset="utf-8"></script> 
-<script src='https ://dappbuilder.org/js/ethers-5.0.umd.min.js' type="text/javascript" charset="utf-8"></script> 
-<script src='https://dappbuilder.org /bsc/tokensalewithreferral/js/tokensale.ui.js' type="text/javascript" charset="utf-8"></script> 
+<script src='https://dappbuilder.org/js/jquery-3.6.0.min.js' type="text/javascript" charset="utf-8"></script>
+<script src='https://dappbuilder.org/js/ethers-5.0.umd.min.js' type="text/javascript" charset="utf-8"></script> 
+<script src='https ://dappbuilder.org/bsc/tokensalewithreferral2/js/tokensale.ui.js' type="text/javascript" charset="utf-8"></script> 
 
 </body> 
 </html>
-            
